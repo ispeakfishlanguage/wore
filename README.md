@@ -251,13 +251,18 @@ vercel
 1. Create a new Web Service on Render
 2. Connect your GitHub repository
 3. Configure the service:
-   - **Build Command**: `cd backend && pip install -r requirements.txt`
-   - **Start Command**: `cd backend && python main.py`
+   - **Root Directory**: `backend` (IMPORTANT: Set this first!)
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `python main.py`
+   - **Python Version**: `3.11.9`
    - **Environment Variables**:
      - `GITHUB_TOKEN`: Your GitHub token
-     - `PORT`: 8000 (Render provides this automatically)
 
 4. Deploy
+
+**Alternative:** If you can't set Root Directory, use these commands:
+   - **Build Command**: `cd backend && pip install -r requirements.txt`
+   - **Start Command**: `cd backend && python main.py`
 
 ## Environment Variables
 
