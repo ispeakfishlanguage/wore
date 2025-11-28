@@ -175,6 +175,20 @@ h1, h2, h3, h4, h5, h6,
   background-color: white;
 }
 
+/* Time input specific styling */
+input[type="time"] {
+  cursor: pointer;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: opacity(0.6);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  filter: opacity(1);
+}
+
 .form-label {
   font-weight: 600;
   color: var(--text-main);

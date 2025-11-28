@@ -4,8 +4,8 @@ function WeatherForm({ onSubmit, loading }) {
   const [formData, setFormData] = useState({
     home_city: '',
     work_city: '',
-    departure_time: '8',
-    return_time: '18',
+    departure_time: '08:00',
+    return_time: '18:00',
     commute_duration: '30',
     cold_sensitivity: 'medium'
   })
@@ -21,11 +21,16 @@ function WeatherForm({ onSubmit, loading }) {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // Convert times and duration to integers
+    // Convert time strings (HH:MM) to decimal hours
+    const timeToHours = (timeStr) => {
+      const [hours, minutes] = timeStr.split(':').map(Number)
+      return hours + (minutes / 60)
+    }
+
     const submissionData = {
       ...formData,
-      departure_time: parseInt(formData.departure_time, 10),
-      return_time: parseInt(formData.return_time, 10),
+      departure_time: timeToHours(formData.departure_time),
+      return_time: timeToHours(formData.return_time),
       commute_duration: parseInt(formData.commute_duration, 10)
     }
 
@@ -75,40 +80,30 @@ function WeatherForm({ onSubmit, loading }) {
           <div className="row g-3">
             <div className="col-md-4">
               <label htmlFor="departure_time" className="form-label">Departure</label>
-              <select
-                className="form-select"
+              <input
+                type="time"
+                className="form-control"
                 id="departure_time"
                 name="departure_time"
                 value={formData.departure_time}
                 onChange={handleChange}
                 required
                 disabled={loading}
-              >
-                {Array.from({ length: 24 }, (_, i) => (
-                  <option key={i} value={i}>
-                    {i.toString().padStart(2, '0')}:00
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
             <div className="col-md-4">
               <label htmlFor="return_time" className="form-label">Return</label>
-              <select
-                className="form-select"
+              <input
+                type="time"
+                className="form-control"
                 id="return_time"
                 name="return_time"
                 value={formData.return_time}
                 onChange={handleChange}
                 required
                 disabled={loading}
-              >
-                {Array.from({ length: 24 }, (_, i) => (
-                  <option key={i} value={i}>
-                    {i.toString().padStart(2, '0')}:00
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
             <div className="col-md-4">
