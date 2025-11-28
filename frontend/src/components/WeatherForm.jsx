@@ -33,7 +33,9 @@ function WeatherForm({ onSubmit, loading }) {
       ...formData,
       departure_time: timeToHours(formData.departure_time),
       return_time: timeToHours(formData.return_time),
-      commute_duration: parseInt(formData.commute_duration, 10)
+      commute_duration: parseInt(formData.commute_duration, 10),
+      // Send null instead of empty string for meeting_type
+      meeting_type: formData.meeting_type || null
     }
 
     onSubmit(submissionData)
