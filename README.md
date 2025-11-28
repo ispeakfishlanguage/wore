@@ -1,4 +1,4 @@
-# Weather Clothing Recommender
+# WORE - A weather-based outfit recommendation agent
 
 A full-stack application that provides personalized clothing recommendations based on weather conditions for your daily commute. The app uses real-time weather data and AI-powered recommendations to help you decide what to wear.
 
@@ -163,7 +163,7 @@ Root endpoint with API information.
 **Response:**
 ```json
 {
-  "message": "Weather Clothing Recommender API",
+  "message": "WORE - Weather-based Outfit Recommendation Engine API",
   "version": "1.0.0",
   "endpoints": {
     "/recommend": "POST - Get clothing recommendation",
