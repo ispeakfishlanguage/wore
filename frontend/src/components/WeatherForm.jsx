@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './WeatherForm.css'
 
 function WeatherForm({ onSubmit, loading }) {
   const [formData, setFormData] = useState({
@@ -34,149 +33,166 @@ function WeatherForm({ onSubmit, loading }) {
   }
 
   return (
-    <form className="weather-form" onSubmit={handleSubmit}>
-      <div className="form-section">
-        <h2>Location</h2>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="home_city">Home City</label>
-            <input
-              type="text"
-              id="home_city"
-              name="home_city"
-              value={formData.home_city}
-              onChange={handleChange}
-              placeholder="e.g., Solna"
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="work_city">Work City</label>
-            <input
-              type="text"
-              id="work_city"
-              name="work_city"
-              value={formData.work_city}
-              onChange={handleChange}
-              placeholder="e.g., Stockholm"
-              required
-              disabled={loading}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="form-section">
-        <h2>Schedule</h2>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="departure_time">Departure Time</label>
-            <select
-              id="departure_time"
-              name="departure_time"
-              value={formData.departure_time}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            >
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i}>
-                  {i.toString().padStart(2, '0')}:00
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="return_time">Return Time</label>
-            <select
-              id="return_time"
-              name="return_time"
-              value={formData.return_time}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            >
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i}>
-                  {i.toString().padStart(2, '0')}:00
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="commute_duration">Commute Duration (minutes)</label>
-            <select
-              id="commute_duration"
-              name="commute_duration"
-              value={formData.commute_duration}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            >
-              <option value="10">10 minutes</option>
-              <option value="15">15 minutes</option>
-              <option value="20">20 minutes</option>
-              <option value="30">30 minutes</option>
-              <option value="45">45 minutes</option>
-              <option value="60">1 hour</option>
-              <option value="90">1.5 hours</option>
-              <option value="120">2 hours</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div className="form-section">
-        <h2>Preferences</h2>
-        <div className="form-group">
-          <label htmlFor="cold_sensitivity">Cold Sensitivity</label>
-          <div className="radio-group">
-            <label className="radio-label">
+    <form onSubmit={handleSubmit} className="card shadow-sm mb-4">
+      <div className="card-body p-4">
+        <div className="mb-4">
+          <h5 className="card-title text-primary mb-3">Location</h5>
+          <div className="row g-3">
+            <div className="col-md-6">
+              <label htmlFor="home_city" className="form-label">Home City</label>
               <input
+                type="text"
+                className="form-control"
+                id="home_city"
+                name="home_city"
+                value={formData.home_city}
+                onChange={handleChange}
+                placeholder="e.g., Solna"
+                required
+                disabled={loading}
+              />
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="work_city" className="form-label">Work City</label>
+              <input
+                type="text"
+                className="form-control"
+                id="work_city"
+                name="work_city"
+                value={formData.work_city}
+                onChange={handleChange}
+                placeholder="e.g., Stockholm"
+                required
+                disabled={loading}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <h5 className="card-title text-primary mb-3">Schedule</h5>
+          <div className="row g-3">
+            <div className="col-md-4">
+              <label htmlFor="departure_time" className="form-label">Departure Time</label>
+              <select
+                className="form-select"
+                id="departure_time"
+                name="departure_time"
+                value={formData.departure_time}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              >
+                {Array.from({ length: 24 }, (_, i) => (
+                  <option key={i} value={i}>
+                    {i.toString().padStart(2, '0')}:00
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-md-4">
+              <label htmlFor="return_time" className="form-label">Return Time</label>
+              <select
+                className="form-select"
+                id="return_time"
+                name="return_time"
+                value={formData.return_time}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              >
+                {Array.from({ length: 24 }, (_, i) => (
+                  <option key={i} value={i}>
+                    {i.toString().padStart(2, '0')}:00
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-md-4">
+              <label htmlFor="commute_duration" className="form-label">Commute Duration</label>
+              <select
+                className="form-select"
+                id="commute_duration"
+                name="commute_duration"
+                value={formData.commute_duration}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              >
+                <option value="10">10 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="20">20 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="45">45 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="90">1.5 hours</option>
+                <option value="120">2 hours</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <h5 className="card-title text-primary mb-3">Preferences</h5>
+          <label className="form-label">Cold Sensitivity</label>
+          <div className="d-flex flex-column gap-2">
+            <div className="form-check">
+              <input
+                className="form-check-input"
                 type="radio"
                 name="cold_sensitivity"
+                id="sensitivity_low"
                 value="low"
                 checked={formData.cold_sensitivity === 'low'}
                 onChange={handleChange}
                 disabled={loading}
               />
-              <span>Low - I rarely feel cold</span>
-            </label>
+              <label className="form-check-label" htmlFor="sensitivity_low">
+                Low - I rarely feel cold
+              </label>
+            </div>
 
-            <label className="radio-label">
+            <div className="form-check">
               <input
+                className="form-check-input"
                 type="radio"
                 name="cold_sensitivity"
+                id="sensitivity_medium"
                 value="medium"
                 checked={formData.cold_sensitivity === 'medium'}
                 onChange={handleChange}
                 disabled={loading}
               />
-              <span>Medium - Average sensitivity</span>
-            </label>
+              <label className="form-check-label" htmlFor="sensitivity_medium">
+                Medium - Average sensitivity
+              </label>
+            </div>
 
-            <label className="radio-label">
+            <div className="form-check">
               <input
+                className="form-check-input"
                 type="radio"
                 name="cold_sensitivity"
+                id="sensitivity_high"
                 value="high"
                 checked={formData.cold_sensitivity === 'high'}
                 onChange={handleChange}
                 disabled={loading}
               />
-              <span>High - I get cold easily</span>
-            </label>
+              <label className="form-check-label" htmlFor="sensitivity_high">
+                High - I get cold easily
+              </label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <button type="submit" className="submit-button" disabled={loading}>
-        {loading ? 'Getting Recommendation...' : 'Get Recommendation'}
-      </button>
+        <button type="submit" className="btn btn-primary btn-lg w-100" disabled={loading}>
+          {loading ? 'Getting Recommendation...' : 'Get Recommendation'}
+        </button>
+      </div>
     </form>
   )
 }

@@ -40,24 +40,31 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>🌤️ Weather Clothing Recommender</h1>
-        <p>Get personalized clothing recommendations based on your daily commute weather</p>
+      <header className="app-header bg-primary text-white py-5">
+        <div className="container">
+          <h1 className="display-4 fw-bold mb-3">Weather Clothing Recommender</h1>
+          <p className="lead mb-0">Get personalized clothing recommendations based on your daily commute weather</p>
+        </div>
       </header>
 
-      <main className="app-main">
+      <main className="app-main container py-4">
         <WeatherForm onSubmit={handleSubmit} loading={loading} />
 
         {error && (
-          <div className="error-message">
-            <strong>Error:</strong> {error}
+          <div className="alert alert-danger d-flex align-items-center" role="alert">
+            <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlinkHref="#exclamation-triangle-fill"/></svg>
+            <div>
+              <strong>Error:</strong> {error}
+            </div>
           </div>
         )}
 
         {loading && (
-          <div className="loading">
-            <div className="spinner"></div>
-            <p>Getting your recommendation...</p>
+          <div className="text-center py-5">
+            <div className="spinner-border text-primary" role="status" style={{width: '3rem', height: '3rem'}}>
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="mt-3 text-muted">Getting your recommendation...</p>
           </div>
         )}
 
@@ -66,8 +73,10 @@ function App() {
         )}
       </main>
 
-      <footer className="app-footer">
-        <p>Weather data from <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
+      <footer className="app-footer bg-light border-top py-3 mt-5">
+        <div className="container text-center text-muted">
+          <p className="mb-0">Weather data from <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer" className="text-decoration-none">Open-Meteo</a></p>
+        </div>
       </footer>
     </div>
   )
