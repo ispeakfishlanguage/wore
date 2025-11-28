@@ -40,7 +40,7 @@ class RecommendationRequest(BaseModel):
     cold_sensitivity: str = Field(..., pattern="^(low|medium|high)$", description="Cold sensitivity level")
 
     class Config:
-        json_schema_extra = {
+        schema_extra = {
             "example": {
                 "home_city": "New York",
                 "work_city": "Jersey City",
