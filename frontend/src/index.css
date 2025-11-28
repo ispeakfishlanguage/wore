@@ -18,6 +18,13 @@
   --chip-hot-text: #C45527;
   --chip-rain-bg: #E9DFF5;
   --chip-rain-text: #3D2744;
+
+  /* Override Bootstrap's default primary color */
+  --bs-primary: #E66A4E;
+  --bs-primary-rgb: 230, 106, 78;
+  --bs-btn-active-bg: #CF5C43;
+  --bs-btn-active-border-color: #CF5C43;
+  --bs-btn-focus-shadow-rgb: 230, 106, 78;
 }
 
 /* Base Styles */
@@ -87,32 +94,56 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .btn-primary {
-  background-color: var(--primary-terracotta);
-  border-color: var(--primary-terracotta);
-  color: white;
+  background-color: var(--primary-terracotta) !important;
+  border-color: var(--primary-terracotta) !important;
+  color: white !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
-.btn-primary:focus-visible {
-  background-color: var(--primary-hover);
-  border-color: var(--primary-hover);
-  color: white;
-  box-shadow: 0 0 0 3px rgba(230, 106, 78, 0.25);
+.btn-primary:focus-visible,
+.btn-primary.active,
+.btn-primary.focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+  color: white !important;
+  box-shadow: 0 0 0 3px rgba(230, 106, 78, 0.25) !important;
 }
 
-.btn-primary:active {
-  background-color: #B84E39;
-  border-color: #B84E39;
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #B84E39 !important;
+  border-color: #B84E39 !important;
 }
 
 .btn-primary:disabled,
-.btn-primary.disabled {
-  background-color: var(--primary-terracotta);
-  border-color: var(--primary-terracotta);
+.btn-primary.disabled,
+.btn-primary:disabled:hover,
+.btn-primary:disabled:focus,
+.btn-primary:disabled:active {
+  background-color: var(--primary-terracotta) !important;
+  border-color: var(--primary-terracotta) !important;
   opacity: 0.7;
-  color: white;
+  color: white !important;
+}
+
+/* Override any focus states that might show blue */
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-primary.focus {
+  outline: 0 !important;
+  box-shadow: 0 0 0 3px rgba(230, 106, 78, 0.25) !important;
+}
+
+/* Button check states (for button-like checkboxes) */
+.btn-check:checked + .btn-primary,
+.btn-check:active + .btn-primary {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
 }
 
 .btn-outline-secondary {
