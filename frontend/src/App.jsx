@@ -40,19 +40,27 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header bg-primary text-white py-5">
+      <header className="py-4" style={{backgroundColor: 'var(--bg-warm)'}}>
         <div className="container">
-          <h1 className="display-4 fw-bold mb-3">WORE</h1>
-          <p className="lead mb-0">A weather-based outfit recommendation agent</p>
+          <h1 style={{
+            fontFamily: 'Playfair Display, serif',
+            fontSize: '2.5rem',
+            fontWeight: 700,
+            letterSpacing: '0.05em',
+            margin: 0,
+            color: 'var(--text-main)'
+          }}>
+            WORE
+          </h1>
+          <p className="label-sm mb-0">A Weather-Based Outfit Recommendation Agent</p>
         </div>
       </header>
 
-      <main className="app-main container py-4">
+      <main className="container py-5">
         <WeatherForm onSubmit={handleSubmit} loading={loading} />
 
         {error && (
-          <div className="alert alert-danger d-flex align-items-center" role="alert">
-            <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlinkHref="#exclamation-triangle-fill"/></svg>
+          <div className="alert alert-danger d-flex align-items-center mt-4" role="alert">
             <div>
               <strong>Error:</strong> {error}
             </div>
@@ -61,7 +69,7 @@ function App() {
 
         {loading && (
           <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status" style={{width: '3rem', height: '3rem'}}>
+            <div className="spinner-border" role="status" style={{width: '3rem', height: '3rem'}}>
               <span className="visually-hidden">Loading...</span>
             </div>
             <p className="mt-3 text-muted">Getting your recommendation...</p>
@@ -73,9 +81,11 @@ function App() {
         )}
       </main>
 
-      <footer className="app-footer bg-light border-top py-3 mt-5">
-        <div className="container text-center text-muted">
-          <p className="mb-0">Weather data from <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer" className="text-decoration-none">Open-Meteo</a></p>
+      <footer className="app-footer py-4 mt-5">
+        <div className="container text-center">
+          <p className="mb-0 text-muted" style={{fontSize: '0.875rem'}}>
+            Weather data from <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a>
+          </p>
         </div>
       </footer>
     </div>

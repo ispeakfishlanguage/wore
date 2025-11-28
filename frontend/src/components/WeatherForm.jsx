@@ -33,10 +33,10 @@ function WeatherForm({ onSubmit, loading }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card shadow-sm mb-4">
+    <form onSubmit={handleSubmit} className="card mb-4">
       <div className="card-body p-4">
         <div className="mb-4">
-          <h5 className="card-title text-primary mb-3">Location</h5>
+          <p className="label-sm mb-3">Location</p>
           <div className="row g-3">
             <div className="col-md-6">
               <label htmlFor="home_city" className="form-label">Home City</label>
@@ -71,10 +71,10 @@ function WeatherForm({ onSubmit, loading }) {
         </div>
 
         <div className="mb-4">
-          <h5 className="card-title text-primary mb-3">Schedule</h5>
+          <p className="label-sm mb-3">Schedule</p>
           <div className="row g-3">
             <div className="col-md-4">
-              <label htmlFor="departure_time" className="form-label">Departure Time</label>
+              <label htmlFor="departure_time" className="form-label">Departure</label>
               <select
                 className="form-select"
                 id="departure_time"
@@ -93,7 +93,7 @@ function WeatherForm({ onSubmit, loading }) {
             </div>
 
             <div className="col-md-4">
-              <label htmlFor="return_time" className="form-label">Return Time</label>
+              <label htmlFor="return_time" className="form-label">Return</label>
               <select
                 className="form-select"
                 id="return_time"
@@ -112,7 +112,7 @@ function WeatherForm({ onSubmit, loading }) {
             </div>
 
             <div className="col-md-4">
-              <label htmlFor="commute_duration" className="form-label">Commute Duration</label>
+              <label htmlFor="commute_duration" className="form-label">Commute</label>
               <select
                 className="form-select"
                 id="commute_duration"
@@ -122,11 +122,11 @@ function WeatherForm({ onSubmit, loading }) {
                 required
                 disabled={loading}
               >
-                <option value="10">10 minutes</option>
-                <option value="15">15 minutes</option>
-                <option value="20">20 minutes</option>
-                <option value="30">30 minutes</option>
-                <option value="45">45 minutes</option>
+                <option value="10">10 min</option>
+                <option value="15">15 min</option>
+                <option value="20">20 min</option>
+                <option value="30">30 min</option>
+                <option value="45">45 min</option>
                 <option value="60">1 hour</option>
                 <option value="90">1.5 hours</option>
                 <option value="120">2 hours</option>
@@ -136,8 +136,7 @@ function WeatherForm({ onSubmit, loading }) {
         </div>
 
         <div className="mb-4">
-          <h5 className="card-title text-primary mb-3">Preferences</h5>
-          <label className="form-label">Cold Sensitivity</label>
+          <p className="label-sm mb-3">Preferences</p>
           <div className="d-flex flex-column gap-2">
             <div className="form-check">
               <input
@@ -151,7 +150,7 @@ function WeatherForm({ onSubmit, loading }) {
                 disabled={loading}
               />
               <label className="form-check-label" htmlFor="sensitivity_low">
-                Low - I rarely feel cold
+                Low sensitivity
               </label>
             </div>
 
@@ -167,7 +166,7 @@ function WeatherForm({ onSubmit, loading }) {
                 disabled={loading}
               />
               <label className="form-check-label" htmlFor="sensitivity_medium">
-                Medium - Average sensitivity
+                Medium sensitivity
               </label>
             </div>
 
@@ -183,13 +182,13 @@ function WeatherForm({ onSubmit, loading }) {
                 disabled={loading}
               />
               <label className="form-check-label" htmlFor="sensitivity_high">
-                High - I get cold easily
+                High sensitivity
               </label>
             </div>
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary btn-lg w-100" disabled={loading}>
+        <button type="submit" className="btn btn-primary w-100" disabled={loading}>
           {loading ? 'Getting Recommendation...' : 'Get Recommendation'}
         </button>
       </div>
