@@ -46,7 +46,7 @@ A full-stack application that provides personalized clothing recommendations bas
 - Python 3.8+
 - SQLite (caching)
 - HTTPX (async HTTP client)
-- Azure AI Inference SDK (GitHub Models)
+- OpenAI SDK (for GitHub Models)
 
 ### External Services
 - **Open-Meteo API**: Weather data

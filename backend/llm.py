@@ -1,7 +1,6 @@
 import os
 from typing import Dict, Any
-from azure.ai.inference import ChatCompletionsClient
-from azure.core.credentials import AzureKeyCredential
+from openai import OpenAI
 
 
 class LLMService:
@@ -11,12 +10,11 @@ class LLMService:
         if not self.token:
             raise ValueError("GITHUB_TOKEN environment variable is required")
 
-        self.endpoint = "https://models.inference.ai.azure.com"
         self.model = "gpt-4o-mini"  # Using GPT-4o-mini for cost efficiency
 
-        self.client = ChatCompletionsClient(
-            endpoint=self.endpoint,
-            credential=AzureKeyCredential(self.token)
+        self.client = OpenAI(
+            base_url="https://models.inference.ai.azure.com",
+            api_key=self.token
         )
 
     def generate_recommendation(
@@ -48,7 +46,7 @@ class LLMService:
             cold_sensitivity
         )
 
-        response = self.client.complete(
+        response = self.client.chat.completions.create(
             messages=[
                 {"role": "system", "content": "You are a helpful assistant that provides practical clothing recommendations based on weather conditions. Be concise, friendly, and specific."},
                 {"role": "user", "content": prompt}

@@ -114,7 +114,7 @@ backend/
 - `LLMService` class for GitHub Models integration
 - Prompt construction
 - Temperature and sensitivity-based recommendations
-- Azure AI Inference SDK integration
+- OpenAI SDK integration for GitHub Models
 
 ## API Endpoints
 
@@ -358,7 +358,7 @@ logging.basicConfig(level=logging.DEBUG)
 - `httpx`: Async HTTP client
 - `python-dotenv`: Environment variable management
 - `pydantic`: Data validation
-- `azure-ai-inference`: GitHub Models client
+- `openai`: GitHub Models client (OpenAI SDK)
 
 ## License
 
