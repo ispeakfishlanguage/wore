@@ -42,8 +42,8 @@ function App() {
     <div className="app">
       <header className="app-header bg-primary text-white py-5">
         <div className="container">
-          <h1 className="display-4 fw-bold mb-3">Weather Clothing Recommender</h1>
-          <p className="lead mb-0">Get personalized clothing recommendations based on your daily commute weather</p>
+          <h1 className="display-4 fw-bold mb-3">WORE</h1>
+          <p className="lead mb-0">A weather-based outfit recommendation agent</p>
         </div>
       </header>
 
