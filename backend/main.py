@@ -103,13 +103,17 @@ async def get_recommendation(request: RecommendationRequest):
         work_weather_data = await weather_service.get_weather(request.work_city)
 
         # Extract hourly weather for departure and return times
+        # Convert decimal hours to integers for weather lookup
+        departure_hour = int(request.departure_time)
+        return_hour = int(request.return_time)
+
         home_weather = weather_service.get_hourly_weather(
             home_weather_data,
-            request.departure_time
+            departure_hour
         )
         work_weather = weather_service.get_hourly_weather(
             work_weather_data,
-            request.return_time
+            return_hour
         )
 
         # Generate recommendation using LLM
