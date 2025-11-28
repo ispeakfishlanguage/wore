@@ -1,6 +1,6 @@
 import os
+import httpx
 from typing import Dict, Any
-from openai import OpenAI
 
 
 class LLMService:
@@ -10,14 +10,10 @@ class LLMService:
         if not self.token:
             raise ValueError("GITHUB_TOKEN environment variable is required")
 
+        self.endpoint = "https://models.inference.ai.azure.com/chat/completions"
         self.model = "gpt-4o-mini"  # Using GPT-4o-mini for cost efficiency
 
-        self.client = OpenAI(
-            base_url="https://models.inference.ai.azure.com",
-            api_key=self.token
-        )
-
-    def generate_recommendation(
+    async def generate_recommendation(
         self,
         home_weather: Dict[str, Any],
         work_weather: Dict[str, Any],
@@ -46,17 +42,38 @@ class LLMService:
             cold_sensitivity
         )
 
-        response = self.client.chat.completions.create(
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant that provides practical clothing recommendations based on weather conditions. Be concise, friendly, and specific."},
-                {"role": "user", "content": prompt}
-            ],
-            model=self.model,
-            temperature=0.7,
-            max_tokens=500
-        )
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.token}"
+        }
 
-        return response.choices[0].message.content
+        payload = {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant that provides practical clothing recommendations based on weather conditions. Be concise, friendly, and specific."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            "model": self.model,
+            "temperature": 0.7,
+            "max_tokens": 500
+        }
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                self.endpoint,
+                headers=headers,
+                json=payload,
+                timeout=30.0
+            )
+            response.raise_for_status()
+            data = response.json()
+
+        return data["choices"][0]["message"]["content"]
 
     def _build_prompt(
         self,

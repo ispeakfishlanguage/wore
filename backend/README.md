@@ -114,7 +114,7 @@ backend/
 - `LLMService` class for GitHub Models integration
 - Prompt construction
 - Temperature and sensitivity-based recommendations
-- OpenAI SDK integration for GitHub Models
+- Direct HTTP calls to GitHub Models API using httpx
 
 ## API Endpoints
 
@@ -355,10 +355,9 @@ logging.basicConfig(level=logging.DEBUG)
 
 - `fastapi`: Web framework
 - `uvicorn`: ASGI server
-- `httpx`: Async HTTP client
+- `httpx`: Async HTTP client (for weather API and GitHub Models)
 - `python-dotenv`: Environment variable management
 - `pydantic`: Data validation
-- `openai`: GitHub Models client (OpenAI SDK)
 
 ## License
 

@@ -107,7 +107,7 @@ async def get_recommendation(request: RecommendationRequest):
         )
 
         # Generate recommendation using LLM
-        recommendation = llm_service.generate_recommendation(
+        recommendation = await llm_service.generate_recommendation(
             home_weather=home_weather,
             work_weather=work_weather,
             departure_time=request.departure_time,
