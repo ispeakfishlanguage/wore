@@ -46,7 +46,7 @@ function WeatherForm({ onSubmit, loading }) {
               name="home_city"
               value={formData.home_city}
               onChange={handleChange}
-              placeholder="e.g., New York"
+              placeholder="e.g., Solna"
               required
               disabled={loading}
             />
@@ -60,7 +60,7 @@ function WeatherForm({ onSubmit, loading }) {
               name="work_city"
               value={formData.work_city}
               onChange={handleChange}
-              placeholder="e.g., Jersey City"
+              placeholder="e.g., Stockholm"
               required
               disabled={loading}
             />
