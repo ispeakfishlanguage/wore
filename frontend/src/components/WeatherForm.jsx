@@ -7,14 +7,16 @@ function WeatherForm({ onSubmit, loading }) {
     departure_time: '08:00',
     return_time: '18:00',
     commute_duration: '30',
-    cold_sensitivity: 'medium'
+    cold_sensitivity: 'medium',
+    has_important_meeting: false,
+    meeting_type: ''
   })
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }))
   }
 
@@ -182,6 +184,47 @@ function WeatherForm({ onSubmit, loading }) {
               </label>
             </div>
           </div>
+
+          <div className="mt-4">
+            <label className="form-label">Important Meeting</label>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="has_important_meeting"
+                id="has_important_meeting"
+                checked={formData.has_important_meeting}
+                onChange={handleChange}
+                disabled={loading}
+              />
+              <label className="form-check-label" htmlFor="has_important_meeting">
+                I have an important meeting today
+              </label>
+            </div>
+          </div>
+
+          {formData.has_important_meeting && (
+            <div className="mt-3">
+              <label htmlFor="meeting_type" className="form-label">Meeting Type</label>
+              <select
+                className="form-select"
+                id="meeting_type"
+                name="meeting_type"
+                value={formData.meeting_type}
+                onChange={handleChange}
+                required={formData.has_important_meeting}
+                disabled={loading}
+              >
+                <option value="">Select meeting type...</option>
+                <option value="client_meeting">Client Meeting</option>
+                <option value="presentation">Presentation</option>
+                <option value="interview">Job Interview</option>
+                <option value="board_meeting">Board Meeting</option>
+                <option value="networking">Networking Event</option>
+                <option value="casual_team">Casual Team Meeting</option>
+              </select>
+            </div>
+          )}
         </div>
 
         <button type="submit" className="btn btn-primary w-100" disabled={loading}>

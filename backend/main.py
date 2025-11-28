@@ -35,20 +35,24 @@ class RecommendationRequest(BaseModel):
     """Request model for clothing recommendation."""
     home_city: str = Field(..., description="Home city name")
     work_city: str = Field(..., description="Work city name")
-    departure_time: int = Field(..., ge=0, le=23, description="Departure hour (0-23)")
-    return_time: int = Field(..., ge=0, le=23, description="Return hour (0-23)")
+    departure_time: float = Field(..., ge=0, le=24, description="Departure time in decimal hours (0-24)")
+    return_time: float = Field(..., ge=0, le=24, description="Return time in decimal hours (0-24)")
     commute_duration: int = Field(..., ge=1, le=300, description="Commute duration in minutes")
     cold_sensitivity: str = Field(..., pattern="^(low|medium|high)$", description="Cold sensitivity level")
+    has_important_meeting: bool = Field(default=False, description="Whether there's an important meeting today")
+    meeting_type: Optional[str] = Field(default=None, description="Type of important meeting")
 
     class Config:
         schema_extra = {
             "example": {
                 "home_city": "New York",
                 "work_city": "Jersey City",
-                "departure_time": 8,
-                "return_time": 18,
+                "departure_time": 8.5,
+                "return_time": 18.0,
                 "commute_duration": 30,
-                "cold_sensitivity": "medium"
+                "cold_sensitivity": "medium",
+                "has_important_meeting": True,
+                "meeting_type": "client_meeting"
             }
         }
 
@@ -115,7 +119,9 @@ async def get_recommendation(request: RecommendationRequest):
             departure_time=request.departure_time,
             return_time=request.return_time,
             commute_duration=request.commute_duration,
-            cold_sensitivity=request.cold_sensitivity
+            cold_sensitivity=request.cold_sensitivity,
+            has_important_meeting=request.has_important_meeting,
+            meeting_type=request.meeting_type
         )
 
         return RecommendationResponse(

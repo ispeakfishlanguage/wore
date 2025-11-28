@@ -17,10 +17,12 @@ class LLMService:
         self,
         home_weather: Dict[str, Any],
         work_weather: Dict[str, Any],
-        departure_time: int,
-        return_time: int,
+        departure_time: float,
+        return_time: float,
         commute_duration: int,
-        cold_sensitivity: str
+        cold_sensitivity: str,
+        has_important_meeting: bool = False,
+        meeting_type: str = None
     ) -> str:
         """
         Generate clothing recommendation using GitHub Models.
@@ -28,10 +30,12 @@ class LLMService:
         Args:
             home_weather: Weather data for home location
             work_weather: Weather data for work location
-            departure_time: Hour of departure (0-23)
-            return_time: Hour of return (0-23)
+            departure_time: Time of departure in decimal hours (0-24)
+            return_time: Time of return in decimal hours (0-24)
             commute_duration: Commute duration in minutes
             cold_sensitivity: User's cold sensitivity (low/medium/high)
+            has_important_meeting: Whether there's an important meeting
+            meeting_type: Type of important meeting (if applicable)
 
         Returns:
             LLM-generated clothing recommendation
@@ -42,7 +46,9 @@ class LLMService:
             departure_time,
             return_time,
             commute_duration,
-            cold_sensitivity
+            cold_sensitivity,
+            has_important_meeting,
+            meeting_type
         )
 
         headers = {
@@ -82,10 +88,12 @@ class LLMService:
         self,
         home_weather: Dict[str, Any],
         work_weather: Dict[str, Any],
-        departure_time: int,
-        return_time: int,
+        departure_time: float,
+        return_time: float,
         commute_duration: int,
-        cold_sensitivity: str
+        cold_sensitivity: str,
+        has_important_meeting: bool = False,
+        meeting_type: str = None
     ) -> str:
         """
         Build the prompt for the LLM.
@@ -93,10 +101,12 @@ class LLMService:
         Args:
             home_weather: Weather data for home location
             work_weather: Weather data for work location
-            departure_time: Hour of departure
-            return_time: Hour of return
+            departure_time: Time of departure in decimal hours
+            return_time: Time of return in decimal hours
             commute_duration: Commute duration in minutes
             cold_sensitivity: User's cold sensitivity level
+            has_important_meeting: Whether there's an important meeting
+            meeting_type: Type of important meeting (if applicable)
 
         Returns:
             Formatted prompt string
@@ -106,6 +116,15 @@ class LLMService:
         # Extract relevant weather info
         home_condition = WeatherService.interpret_weather_code(home_weather["weather_code"])
         work_condition = WeatherService.interpret_weather_code(work_weather["weather_code"])
+
+        # Format decimal hours to HH:MM
+        def format_time(decimal_hours: float) -> str:
+            hours = int(decimal_hours)
+            minutes = int((decimal_hours - hours) * 60)
+            return f"{hours:02d}:{minutes:02d}"
+
+        departure_str = format_time(departure_time)
+        return_str = format_time(return_time)
 
         # Format commute duration
         if commute_duration >= 60:
@@ -118,16 +137,32 @@ class LLMService:
         else:
             commute_str = f"{commute_duration} minutes"
 
+        # Format meeting type for display
+        meeting_types = {
+            "client_meeting": "Client Meeting",
+            "presentation": "Presentation",
+            "interview": "Job Interview",
+            "board_meeting": "Board Meeting",
+            "networking": "Networking Event",
+            "casual_team": "Casual Team Meeting"
+        }
+        meeting_display = meeting_types.get(meeting_type, meeting_type) if meeting_type else None
+
+        # Build user profile section
+        user_profile = f"- Cold Sensitivity: {cold_sensitivity}"
+        if has_important_meeting and meeting_display:
+            user_profile += f"\n- Important Event Today: {meeting_display} - dress appropriately for a professional setting"
+
         prompt = f"""Based on the following weather conditions, provide a detailed clothing recommendation:
 
-MORNING (Departure at {departure_time:02d}:00):
+MORNING (Departure at {departure_str}):
 - Location: Home
 - Temperature: {home_weather['temperature']}°C
 - Conditions: {home_condition}
 - Precipitation: {home_weather['precipitation']} mm
 - Wind Speed: {home_weather['wind_speed']} km/h
 
-EVENING (Return at {return_time:02d}:00):
+EVENING (Return at {return_str}):
 - Location: Work
 - Temperature: {work_weather['temperature']}°C
 - Conditions: {work_condition}
@@ -139,11 +174,11 @@ COMMUTE:
 - You'll be exposed to outdoor conditions during your commute
 
 USER PROFILE:
-- Cold Sensitivity: {cold_sensitivity}
+{user_profile}
 
 Please provide your recommendation in this EXACT format:
 
-Based on the forecast between {departure_time:02d}:00 and {return_time:02d}:00, here's what you should wear:
+Based on the forecast between {departure_str} and {return_str}, here's what you should wear:
 
 Base layer: [specific recommendation with brief reasoning]
 Legwear: [specific recommendation with brief reasoning]
