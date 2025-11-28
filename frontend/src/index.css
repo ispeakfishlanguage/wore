@@ -107,6 +107,14 @@ h1, h2, h3, h4, h5, h6,
   border-color: #B84E39;
 }
 
+.btn-primary:disabled,
+.btn-primary.disabled {
+  background-color: var(--primary-terracotta);
+  border-color: var(--primary-terracotta);
+  opacity: 0.7;
+  color: white;
+}
+
 .btn-outline-secondary {
   border-color: var(--border-neutral);
   color: var(--text-main);
