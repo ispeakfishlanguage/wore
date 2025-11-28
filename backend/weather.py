@@ -62,7 +62,7 @@ class WeatherService:
                 params={
                     "latitude": lat,
                     "longitude": lon,
-                    "hourly": "temperature_2m,precipitation,weather_code,wind_speed_10m",
+                    "hourly": "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m,uv_index,cloud_cover",
                     "timezone": "auto",
                     "forecast_days": 1
                 }
@@ -100,9 +100,13 @@ class WeatherService:
 
         return {
             "temperature": hourly.get("temperature_2m", [])[index],
+            "apparent_temperature": hourly.get("apparent_temperature", [])[index],
             "precipitation": hourly.get("precipitation", [])[index],
             "weather_code": hourly.get("weather_code", [])[index],
             "wind_speed": hourly.get("wind_speed_10m", [])[index],
+            "wind_gusts": hourly.get("wind_gusts_10m", [])[index],
+            "uv_index": hourly.get("uv_index", [])[index],
+            "cloud_cover": hourly.get("cloud_cover", [])[index],
             "time": times[index] if index < len(times) else None
         }
 

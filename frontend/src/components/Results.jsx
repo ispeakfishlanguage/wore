@@ -13,6 +13,50 @@ function Results({ data }) {
 
   const hasRain = (precipitation) => precipitation > 0.1
 
+  const getUVLevel = (uvIndex) => {
+    if (uvIndex < 3) return 'Very low'
+    if (uvIndex < 6) return 'Low'
+    if (uvIndex < 8) return 'Moderate'
+    if (uvIndex < 11) return 'High'
+    return 'Very high'
+  }
+
+  const WeatherSummary = ({ weather }) => (
+    <div className="mb-4 p-3" style={{
+      backgroundColor: 'var(--bg-warm)',
+      borderRadius: '12px',
+      fontSize: '0.9rem'
+    }}>
+      <p className="label-sm mb-2">Weather Summary</p>
+      <div className="d-flex flex-column gap-1">
+        <div>
+          <strong>Temperature:</strong> {formatTemperature(weather.temperature)}
+          <span className="text-muted"> (feels like {formatTemperature(weather.apparent_temperature)})</span>
+        </div>
+        <div>
+          <strong>Condition:</strong> {weather.condition}
+        </div>
+        <div>
+          <strong>Wind:</strong> {Math.round(weather.wind_speed)} m/s
+          {weather.wind_gusts > weather.wind_speed && (
+            <span className="text-muted"> (gusts up to {Math.round(weather.wind_gusts)} m/s)</span>
+          )}
+        </div>
+        <div>
+          <strong>UV Index:</strong> {getUVLevel(weather.uv_index)} ({weather.uv_index.toFixed(2)})
+        </div>
+        <div>
+          <strong>Cloudiness:</strong> {Math.round(weather.cloud_cover)}% {weather.cloud_cover > 90 ? 'overcast' : weather.cloud_cover > 50 ? 'mostly cloudy' : weather.cloud_cover > 25 ? 'partly cloudy' : 'mostly clear'}
+        </div>
+        {hasRain(weather.precipitation) && (
+          <div>
+            <strong>Precipitation:</strong> {weather.precipitation} mm
+          </div>
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <div className="mt-4">
       {/* Main Recommendation Card */}
@@ -47,17 +91,8 @@ function Results({ data }) {
                 )}
               </div>
 
-              {/* Weather Details */}
-              <div>
-                <div className="weather-detail-row">
-                  <span className="weather-detail-label">Condition</span>
-                  <span className="weather-detail-value">{home_weather.condition}</span>
-                </div>
-                <div className="weather-detail-row">
-                  <span className="weather-detail-label">Wind</span>
-                  <span className="weather-detail-value">{Math.round(home_weather.wind_speed)} km/h</span>
-                </div>
-              </div>
+              {/* Weather Summary */}
+              <WeatherSummary weather={home_weather} />
             </div>
           </div>
         </div>
@@ -80,17 +115,8 @@ function Results({ data }) {
                 )}
               </div>
 
-              {/* Weather Details */}
-              <div>
-                <div className="weather-detail-row">
-                  <span className="weather-detail-label">Condition</span>
-                  <span className="weather-detail-value">{work_weather.condition}</span>
-                </div>
-                <div className="weather-detail-row">
-                  <span className="weather-detail-label">Wind</span>
-                  <span className="weather-detail-value">{Math.round(work_weather.wind_speed)} km/h</span>
-                </div>
-              </div>
+              {/* Weather Summary */}
+              <WeatherSummary weather={work_weather} />
             </div>
           </div>
         </div>
