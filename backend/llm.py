@@ -118,7 +118,7 @@ class LLMService:
         else:
             commute_str = f"{commute_duration} minutes"
 
-        prompt = f"""Based on the following weather conditions, provide a clothing recommendation:
+        prompt = f"""Based on the following weather conditions, provide a detailed clothing recommendation:
 
 MORNING (Departure at {departure_time:02d}:00):
 - Location: Home
@@ -141,11 +141,20 @@ COMMUTE:
 USER PROFILE:
 - Cold Sensitivity: {cold_sensitivity}
 
-Please provide a practical clothing recommendation that addresses:
-1. What to wear for the day (considering you'll be commuting in outdoor conditions)
-2. Whether to bring any additional items (umbrella, extra layers, etc.)
-3. Any specific considerations based on temperature changes, commute duration, and conditions
+Please provide your recommendation in this EXACT format:
 
-Keep the recommendation concise (3-4 sentences) and actionable."""
+Based on the forecast between {departure_time:02d}:00 and {return_time:02d}:00, here's what you should wear:
+
+Base layer: [specific recommendation with brief reasoning]
+Legwear: [specific recommendation with brief reasoning]
+Top: [specific recommendation with brief reasoning]
+Warm layer: [specific recommendation with brief reasoning]
+Outerwear: [specific recommendation with brief reasoning]
+Headwear: [specific recommendation or "Not needed" with reasoning]
+Handwear: [specific recommendation or "Not needed" with reasoning]
+Footwear: [specific recommendation with brief reasoning]
+Umbrella: [Yes/No with reasoning]
+
+Keep each line concise but specific. Reference temperatures and conditions where relevant."""
 
         return prompt
