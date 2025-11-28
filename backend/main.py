@@ -37,6 +37,7 @@ class RecommendationRequest(BaseModel):
     work_city: str = Field(..., description="Work city name")
     departure_time: int = Field(..., ge=0, le=23, description="Departure hour (0-23)")
     return_time: int = Field(..., ge=0, le=23, description="Return hour (0-23)")
+    commute_duration: int = Field(..., ge=1, le=300, description="Commute duration in minutes")
     cold_sensitivity: str = Field(..., pattern="^(low|medium|high)$", description="Cold sensitivity level")
 
     class Config:
@@ -46,6 +47,7 @@ class RecommendationRequest(BaseModel):
                 "work_city": "Jersey City",
                 "departure_time": 8,
                 "return_time": 18,
+                "commute_duration": 30,
                 "cold_sensitivity": "medium"
             }
         }
@@ -112,6 +114,7 @@ async def get_recommendation(request: RecommendationRequest):
             work_weather=work_weather,
             departure_time=request.departure_time,
             return_time=request.return_time,
+            commute_duration=request.commute_duration,
             cold_sensitivity=request.cold_sensitivity
         )
 

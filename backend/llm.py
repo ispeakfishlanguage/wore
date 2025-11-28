@@ -19,6 +19,7 @@ class LLMService:
         work_weather: Dict[str, Any],
         departure_time: int,
         return_time: int,
+        commute_duration: int,
         cold_sensitivity: str
     ) -> str:
         """
@@ -29,6 +30,7 @@ class LLMService:
             work_weather: Weather data for work location
             departure_time: Hour of departure (0-23)
             return_time: Hour of return (0-23)
+            commute_duration: Commute duration in minutes
             cold_sensitivity: User's cold sensitivity (low/medium/high)
 
         Returns:
@@ -39,6 +41,7 @@ class LLMService:
             work_weather,
             departure_time,
             return_time,
+            commute_duration,
             cold_sensitivity
         )
 
@@ -81,6 +84,7 @@ class LLMService:
         work_weather: Dict[str, Any],
         departure_time: int,
         return_time: int,
+        commute_duration: int,
         cold_sensitivity: str
     ) -> str:
         """
@@ -91,6 +95,7 @@ class LLMService:
             work_weather: Weather data for work location
             departure_time: Hour of departure
             return_time: Hour of return
+            commute_duration: Commute duration in minutes
             cold_sensitivity: User's cold sensitivity level
 
         Returns:
@@ -101,6 +106,17 @@ class LLMService:
         # Extract relevant weather info
         home_condition = WeatherService.interpret_weather_code(home_weather["weather_code"])
         work_condition = WeatherService.interpret_weather_code(work_weather["weather_code"])
+
+        # Format commute duration
+        if commute_duration >= 60:
+            hours = commute_duration // 60
+            mins = commute_duration % 60
+            if mins > 0:
+                commute_str = f"{hours}h {mins}min"
+            else:
+                commute_str = f"{hours} hour" if hours == 1 else f"{hours} hours"
+        else:
+            commute_str = f"{commute_duration} minutes"
 
         prompt = f"""Based on the following weather conditions, provide a clothing recommendation:
 
@@ -118,13 +134,17 @@ EVENING (Return at {return_time:02d}:00):
 - Precipitation: {work_weather['precipitation']} mm
 - Wind Speed: {work_weather['wind_speed']} km/h
 
+COMMUTE:
+- Duration: {commute_str}
+- You'll be exposed to outdoor conditions during your commute
+
 USER PROFILE:
 - Cold Sensitivity: {cold_sensitivity}
 
 Please provide a practical clothing recommendation that addresses:
-1. What to wear for the day
+1. What to wear for the day (considering you'll be commuting in outdoor conditions)
 2. Whether to bring any additional items (umbrella, extra layers, etc.)
-3. Any specific considerations based on the temperature changes and conditions
+3. Any specific considerations based on temperature changes, commute duration, and conditions
 
 Keep the recommendation concise (3-4 sentences) and actionable."""
 

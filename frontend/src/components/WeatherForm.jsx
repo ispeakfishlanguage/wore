@@ -7,6 +7,7 @@ function WeatherForm({ onSubmit, loading }) {
     work_city: '',
     departure_time: '8',
     return_time: '18',
+    commute_duration: '30',
     cold_sensitivity: 'medium'
   })
 
@@ -21,11 +22,12 @@ function WeatherForm({ onSubmit, loading }) {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // Convert times to integers
+    // Convert times and duration to integers
     const submissionData = {
       ...formData,
       departure_time: parseInt(formData.departure_time, 10),
-      return_time: parseInt(formData.return_time, 10)
+      return_time: parseInt(formData.return_time, 10),
+      commute_duration: parseInt(formData.commute_duration, 10)
     }
 
     onSubmit(submissionData)
@@ -102,6 +104,27 @@ function WeatherForm({ onSubmit, loading }) {
                   {i.toString().padStart(2, '0')}:00
                 </option>
               ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="commute_duration">Commute Duration (minutes)</label>
+            <select
+              id="commute_duration"
+              name="commute_duration"
+              value={formData.commute_duration}
+              onChange={handleChange}
+              required
+              disabled={loading}
+            >
+              <option value="10">10 minutes</option>
+              <option value="15">15 minutes</option>
+              <option value="20">20 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="45">45 minutes</option>
+              <option value="60">1 hour</option>
+              <option value="90">1.5 hours</option>
+              <option value="120">2 hours</option>
             </select>
           </div>
         </div>
