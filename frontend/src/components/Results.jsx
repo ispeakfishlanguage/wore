@@ -21,6 +21,23 @@ function Results({ data }) {
     return 'Very high'
   }
 
+  const formatRecommendation = (text) => {
+    // Split by lines and format each one
+    const lines = text.split('\n')
+    return lines.map((line, index) => {
+      // Match pattern "LayerName: rest of text"
+      const match = line.match(/^(Base layer|Legwear|Top|Warm layer|Outerwear|Headwear|Handwear|Footwear|Umbrella):\s*(.+)$/i)
+      if (match) {
+        return (
+          <div key={index}>
+            <strong>{match[1]}:</strong> {match[2]}
+          </div>
+        )
+      }
+      return <div key={index}>{line}</div>
+    })
+  }
+
   const WeatherSummary = ({ weather }) => (
     <div className="mb-4 p-3" style={{
       backgroundColor: 'var(--bg-warm)',
@@ -66,7 +83,7 @@ function Results({ data }) {
             Today's Outfit
           </p>
           <div className="recommendation-text">
-            {recommendation}
+            {formatRecommendation(recommendation)}
           </div>
         </div>
       </div>
