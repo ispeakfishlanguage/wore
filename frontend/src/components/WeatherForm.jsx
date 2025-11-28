@@ -137,6 +137,7 @@ function WeatherForm({ onSubmit, loading }) {
 
         <div className="mb-4">
           <p className="label-sm mb-3">Preferences</p>
+          <label className="form-label">Cold Sensitivity</label>
           <div className="d-flex flex-column gap-2">
             <div className="form-check">
               <input

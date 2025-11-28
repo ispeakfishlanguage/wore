@@ -93,10 +93,18 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .btn-primary:hover,
-.btn-primary:focus {
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible {
   background-color: var(--primary-hover);
   border-color: var(--primary-hover);
   color: white;
+  box-shadow: 0 0 0 3px rgba(230, 106, 78, 0.25);
+}
+
+.btn-primary:active {
+  background-color: #B84E39;
+  border-color: #B84E39;
 }
 
 .btn-outline-secondary {
